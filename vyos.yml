@@ -1,0 +1,15 @@
+name: vyos
+
+topology:
+  defaults:
+    kind: vyosnetworks_vyos
+    image: vyos:1.5-lab
+
+  nodes:
+    pe1: {}
+    p: {}
+    pe2: {}
+
+  links:
+    - endpoints: ["pe1:eth1", "p:eth1"]
+    - endpoints: ["p:eth2", "pe2:eth1"]
