@@ -20,10 +20,9 @@ topology:
       exec:
         - ip link add CUST type vrf table 100
         - ip link set CUST up
-        - ip link add custlo type dummy
-        - ip link set custlo master CUST
-        - ip addr add 192.168.1.1/32 dev custlo
-        - ip link set custlo up
+        - ip link set eth2 master CUST
+        - ip addr add 192.168.1.1/242 dev eth2
+        - ip link set eth2 up
         - sysctl -w net.ipv4.conf.eth1.rp_filter=0
         - sysctl -w net.mpls.conf.eth1.input=1
         - vtysh -b
@@ -48,14 +47,37 @@ topology:
       exec:
         - ip link add CUST type vrf table 100
         - ip link set CUST up
-        - ip link add custlo type dummy
-        - ip link set custlo master CUST
-        - ip addr add 192.168.2.1/32 dev custlo
-        - ip link set custlo up
+        - ip link set eth2 master CUST
+        - ip addr add 192.168.2.1/242 dev eth2
+        - ip link set eth2 up
         - sysctl -w net.ipv4.conf.eth1.rp_filter=0
         - sysctl -w net.mpls.conf.eth1.input=1
         - vtysh -b
 
+    pc:
+      kind: linux
+      image: vnc-desktop:bookworm
+      image-pull-policy: Never
+      ports:
+        - 5900:5900/tcp
+      env:
+        VNC_PASSWORD: "cisco123"
+        VNC_GEOMETRY: "1440x900"
+        VNC_DEPTH: "24"
+      exec:
+        - ip link set eth1 up
+        - ip addr add 192.168.1.100/24 dev eth1
+        - ip route add 192.168.2.0/24 via 192.168.1.1
+    www:
+      kind: linux
+      image: nginx:1.0
+      exec:
+        - ip link set eth1 up
+        - ip addr add 192.168.2.100/24 dev eth1
+        - ip route add 192.168.1.0/24 via 192.168.2.1
+
   links:
+    - endpoints: ["pc:eth1", "pe1:eth2"]
     - endpoints: ["pe1:eth1", "p:eth1"]
     - endpoints: ["p:eth2", "pe2:eth1"]
+    - endpoints: ["pe2:eth2", "www:eth1"]
