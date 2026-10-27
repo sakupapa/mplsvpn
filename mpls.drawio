@@ -100,7 +100,7 @@
             <mxPoint as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="2igNbo2MxOAqVMGyMljn-21" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="192.168.200.100" vertex="1">
+        <mxCell id="2igNbo2MxOAqVMGyMljn-21" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="192.168.2.100" vertex="1">
           <mxGeometry height="26" width="98" x="727" y="246" as="geometry" />
         </mxCell>
       </root>
