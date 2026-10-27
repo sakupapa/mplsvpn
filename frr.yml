@@ -21,11 +21,10 @@ topology:
         - ip link add CUST type vrf table 100
         - ip link set CUST up
         - ip link set eth2 master CUST
-        - ip addr add 192.168.1.1/242 dev eth2
+        - ip addr add 192.168.1.1/24 dev eth2
         - ip link set eth2 up
         - sysctl -w net.ipv4.conf.eth1.rp_filter=0
         - sysctl -w net.mpls.conf.eth1.input=1
-        - vtysh -b
 
     p:
       startup-config: configs/frr_p.cfg
@@ -48,11 +47,10 @@ topology:
         - ip link add CUST type vrf table 100
         - ip link set CUST up
         - ip link set eth2 master CUST
-        - ip addr add 192.168.2.1/242 dev eth2
+        - ip addr add 192.168.2.1/24 dev eth2
         - ip link set eth2 up
         - sysctl -w net.ipv4.conf.eth1.rp_filter=0
         - sysctl -w net.mpls.conf.eth1.input=1
-        - vtysh -b
 
     pc:
       kind: linux
