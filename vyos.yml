@@ -3,12 +3,15 @@ name: vyos
 topology:
   defaults:
     kind: vyosnetworks_vyos
-    image: vyos:1.5-lab
+    image: vyos:1.0
 
   nodes:
-    pe1: {}
-    p: {}
-    pe2: {}
+    pe1: 
+      startup-config: configs/vyos_pe1.cfg
+    p: 
+      startup-config: configs/vyos_p.cfg
+    pe2: 
+      startup-config: configs/vyos_pe2.cfg
 
   links:
     - endpoints: ["pe1:eth1", "p:eth1"]
