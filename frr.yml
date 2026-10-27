@@ -1,4 +1,4 @@
-name: mpls
+name: frr
 
 topology:
   defaults:
