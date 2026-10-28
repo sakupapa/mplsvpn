@@ -21,7 +21,8 @@ topology:
       stages:
         create:
           wait-for:
-            - pe1
+            - node: pe1
+              stage: configure
       ports:
         - 5900:5900/tcp
       env:
@@ -38,7 +39,8 @@ topology:
       stages:
         create:
           wait-for:
-            - pe2
+            - node: pe2
+              stage: configure
       exec:
         - ip link set eth1 up
         - ip addr add 192.168.2.100/24 dev eth1
