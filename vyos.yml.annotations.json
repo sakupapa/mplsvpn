@@ -1,0 +1,57 @@
+{
+  "freeTextAnnotations": [],
+  "freeShapeAnnotations": [],
+  "trafficRateAnnotations": [],
+  "groupStyleAnnotations": [],
+  "networkNodeAnnotations": [],
+  "nodeAnnotations": [
+    {
+      "id": "home",
+      "position": {
+        "x": 180,
+        "y": 340
+      },
+      "icon": "rgw"
+    },
+    {
+      "id": "pe1",
+      "position": {
+        "x": 360,
+        "y": 340
+      }
+    },
+    {
+      "id": "p",
+      "position": {
+        "x": 520,
+        "y": 340
+      }
+    },
+    {
+      "id": "pe2",
+      "position": {
+        "x": 660,
+        "y": 340
+      }
+    },
+    {
+      "id": "pc",
+      "position": {
+        "x": 60,
+        "y": 340
+      },
+      "icon": "client"
+    },
+    {
+      "id": "www",
+      "position": {
+        "x": 820,
+        "y": 340
+      },
+      "icon": "server"
+    }
+  ],
+  "edgeAnnotations": [],
+  "aliasEndpointAnnotations": [],
+  "viewerSettings": {}
+}
