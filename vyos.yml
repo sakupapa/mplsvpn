@@ -25,9 +25,9 @@ topology:
         VNC_GEOMETRY: "1440x900"
         VNC_DEPTH: "24"
       exec:
-        - ip link set eth0 down
         - ip link set eth1 up
         - dhclient eth1
+        - ip addr add 192.168.2.0/24 dev eth1
     www:
       kind: linux
       image: nginx:1.0
