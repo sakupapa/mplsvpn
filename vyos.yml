@@ -21,7 +21,7 @@ topology:
       stages:
         create:
           wait-for:
-            - node: pe1
+            - node: home
               stage: configure
       ports:
         - 5900:5900/tcp
