@@ -18,6 +18,10 @@ topology:
       kind: linux
       image: vnc-desktop:bookworm
       image-pull-policy: Never
+      stages:
+        create:
+          wait-for:
+            - pe1
       ports:
         - 5900:5900/tcp
       env:
@@ -27,11 +31,14 @@ topology:
       exec:
         - ip link set eth1 up
         - dhclient eth1
-        - sleep 10
         - ip route add 192.168.2.0/24 via 192.168.100.254
     www:
       kind: linux
       image: nginx:1.0
+      stages:
+        create:
+          wait-for:
+            - pe2
       exec:
         - ip link set eth1 up
         - ip addr add 192.168.2.100/24 dev eth1
