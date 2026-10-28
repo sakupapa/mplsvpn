@@ -5,3 +5,4 @@ sudo modprobe mpls_iptunnel
 sudo modprobe vrf
 cd pc; docker build -t vnc-desktop:bookworm -f Dockerfile.vnc .; cd ..
 cd www; docker build -t nginx:1.0 -f Dockerfile.nginx . ; cd ..
+cd dns; docker build -t coredns:1.0 -f Dockerfile.coredns . ; cd ..

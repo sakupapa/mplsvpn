@@ -45,6 +45,20 @@ topology:
         - ip link set eth1 up
         - ip addr add 192.168.2.100/24 dev eth1
         - ip route add 192.168.1.0/24 via 192.168.2.1
+    dns:
+      kind: linux
+      image: coredns:1.0
+      stages:
+        create:
+          wait-for:
+            - node: pe2
+              stage: configure
+      binds:
+        - ./dns/Corefile:/etc/coredns/Corefile:ro
+      exec:
+        - ip link set eth1 up
+        - ip addr add 100.0.0.1/24 dev eth1
+        - ip route add 192.168.1.0/24 via 100.0.0.254
 
   links:
     - endpoints: ["pc:eth1", "home:eth1"]
@@ -52,3 +66,4 @@ topology:
     - endpoints: ["pe1:eth1", "p:eth1"]
     - endpoints: ["p:eth2", "pe2:eth1"]
     - endpoints: ["pe2:eth2", "www:eth1"]
+    - endpoints: ["pe2:eth3", "dns:eth1"]
