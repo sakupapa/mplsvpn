@@ -49,6 +49,13 @@
         "y": 340
       },
       "icon": "server"
+    },
+    {
+      "id": "dns",
+      "position": {
+        "x": 760,
+        "y": 280
+      }
     }
   ],
   "edgeAnnotations": [],
