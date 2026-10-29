@@ -3,7 +3,7 @@
     log
 
     hosts {
-        192.168.2.100 www.mplslab.com
+        192.168.2.100 www.mplsvpnlab.com
         ttl 60
         fallthrough
     }
