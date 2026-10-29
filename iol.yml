@@ -1,0 +1,70 @@
+name: vyos
+
+topology:
+  defaults:
+    kind: cisco_iol
+    image: vrnetlab/cisco_iol:17.16.01a
+
+  nodes:
+    home: 
+      startup-config: configs/iol_home.cfg.partial
+    pe1: 
+      startup-config: configs/iol_pe1.cfg.partial
+    p: 
+      startup-config: configs/iol_p.cfg.partial
+    pe2: 
+      startup-config: configs/iol_pe2.cfg.partial
+    pc:
+      kind: linux
+      image: vnc-desktop:bookworm
+      image-pull-policy: Never
+      stages:
+        create:
+          wait-for:
+            - node: home
+              stage: configure
+      ports:
+        - 5900:5900/tcp
+      env:
+        VNC_PASSWORD: "cisco123"
+        VNC_GEOMETRY: "1440x900"
+        VNC_DEPTH: "24"
+      exec:
+        - ip link set eth1 up
+        - dhclient eth1
+        - ip route add 192.168.2.0/24 via 192.168.100.254
+        - ip route add 100.0.0.0/24 via 192.168.100.254
+    www:
+      kind: linux
+      image: nginx:1.0
+      stages:
+        create:
+          wait-for:
+            - node: pe2
+              stage: configure
+      exec:
+        - ip link set eth1 up
+        - ip addr add 192.168.2.100/24 dev eth1
+        - ip route add 192.168.1.0/24 via 192.168.2.1
+    dns:
+      kind: linux
+      image: coredns:1.0
+      stages:
+        create:
+          wait-for:
+            - node: pe2
+              stage: configure
+      binds:
+        - ./dns/Corefile:/etc/coredns/Corefile:ro
+      exec:
+        - ip link set eth1 up
+        - ip addr add 100.0.0.1/24 dev eth1
+        - ip route add 192.168.1.0/24 via 100.0.0.254
+
+  links:
+    - endpoints: ["pc:eth1", "home:eth1"]
+    - endpoints: ["home:eth2", "pe1:eth2"]
+    - endpoints: ["pe1:eth1", "p:eth1"]
+    - endpoints: ["p:eth2", "pe2:eth1"]
+    - endpoints: ["pe2:eth2", "www:eth1"]
+    - endpoints: ["pe2:eth3", "dns:eth1"]
