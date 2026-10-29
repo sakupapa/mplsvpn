@@ -1,13 +1,15 @@
 .:53 {
-    forward . 8.8.8.8
-    log
     errors
-}
-vncklab.com:53 {
+    log
+
     hosts {
-        127.0.0.1 localhost
-        1.0.0.1 www.vncklab.com
+        192.168.2.100 www.mplslab.com
+        ttl 60
         fallthrough
     }
-    log
+
+    forward . 8.8.8.8 8.8.4.4
+
+    cache 30
+    reload
 }
