@@ -17,12 +17,12 @@ interface Loopback0
  ip address 2.2.2.2 255.255.255.255
 !
 interface Ethernet0/1
- vrf forwarding vpn
- ip address 192.168.1.254 255.255.255.0
-!
-interface Ethernet0/2
  ip address 10.23.0.2 255.255.255.0
  mpls ip
+!
+interface Ethernet0/2
+ vrf forwarding vpn
+ ip address 192.168.1.254 255.255.255.0
 !
 router ospf 1
  network 2.2.2.2 0.0.0.0 area 0
