@@ -10,6 +10,7 @@ resource "google_compute_instance" "clab" {
   zone         = var.zone
   tags         = ["clab"]
 
+  # Boot Disk
   boot_disk {
     initialize_params {
       image = "debian-cloud/debian-12"
@@ -18,6 +19,16 @@ resource "google_compute_instance" "clab" {
     }
   }
 
+  # Spot VM Configuration
+  scheduling {
+    provisioning_model          = "SPOT"
+    preemptible                 = true
+    automatic_restart           = false
+    on_host_maintenance         = "TERMINATE"
+    instance_termination_action = "STOP"
+  }
+
+  # Network
   network_interface {
     network = "default"
     access_config {} # External IP
@@ -62,5 +73,8 @@ resource "google_compute_instance" "clab" {
 
     systemctl enable docker
     systemctl start docker
+
+    sudo usermod -aG clab_admins ${var.ssh_user}
+
   EOT
 }
